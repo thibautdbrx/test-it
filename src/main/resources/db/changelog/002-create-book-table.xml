@@ -23,6 +23,6 @@
                 <constraints nullable="true"/>
             </column>
         </createTable>
-        <addForeignKeyConstraint baseTableName="book" baseColumnNames="borrower_id" referencedTableName="members" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="book" baseColumnNames="borrower_id" referencedTableName="members" referencedColumnNames="id" constraintName="member_id"/>
     </changeSet>
 </databaseChangeLog>

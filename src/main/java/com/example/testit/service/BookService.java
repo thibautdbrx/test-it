@@ -64,6 +64,7 @@ public class BookService {
         if (!ongoingLoans.isEmpty()) {
             throw new IllegalStateException("Member cannot borrow more than one book at a time");
         }
+        mailService.sendMail(member,"Emprunt livre " + book.getTitle(), "Vous avez emprunter le livre");
         book.setStatus(Status.EMPRUNTE);
         book.setBorrower(member);
         Book saved = bookRepository.save(book);
