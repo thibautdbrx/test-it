@@ -47,7 +47,6 @@ public class BookServiceTest {
         //when
         when(bookRepository.findById(1L)).thenReturn(Optional.of(livre));
         when(memberRepository.findById(1L)).thenReturn(Optional.of(member));
-        when(bookRepository.findByMemberAndStatus(1L, Status.RENDU)).thenReturn(List.of());
         when(bookRepository.save(livre)).thenReturn(livre);
 
         Book borrowedBook = bookService.borrowBook(livre.getId(), member.getId());

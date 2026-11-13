@@ -24,29 +24,29 @@ public class BookRepositoryIT {
     @Test
     public void findMembersTest(){
         //given
-        Book b1 = new Book();
-        b1.setStatus(Status.EMPRUNTE);
-        b1 = bookRepository.save(b1);
-
-        Book b2 = new Book();
-        b2.setStatus(Status.EMPRUNTE);
-        b2 = bookRepository.save(b2);
-
-        Book b3 = new Book();
-        b3.setStatus(Status.EMPRUNTE);
-        b3 = bookRepository.save(b3);
-
-        Book b4 = new Book();
-        b4.setStatus(Status.EMPRUNTE);
-        b4 = bookRepository.save(b4);
 
         Member m1 = new Member();
-        m1.setBooks(List.of(b1, b2));
         m1 = memberRepository.save(m1);
-
         Member m2 = new Member();
-        m2.setBooks(List.of(b3, b4));
         m2 = memberRepository.save(m2);
+
+
+        Book b1 = new Book();
+        b1.setStatus(Status.EMPRUNTE);
+        b1.setBorrower(m1);
+        b1 = bookRepository.save(b1);
+        Book b2 = new Book();
+        b2.setStatus(Status.EMPRUNTE);
+        b2.setBorrower(m1);
+        b2 = bookRepository.save(b2);
+        Book b3 = new Book();
+        b3.setStatus(Status.EMPRUNTE);
+        b3.setBorrower(m2);
+        b3 = bookRepository.save(b3);
+        Book b4 = new Book();
+        b4.setStatus(Status.EMPRUNTE);
+        b4.setBorrower(m2);
+        b4 = bookRepository.save(b4);
 
         //when
         List<Book> m1Books = bookRepository.findByMemberAndStatus(m1.getId(), Status.EMPRUNTE);
@@ -55,8 +55,10 @@ public class BookRepositoryIT {
 
         //then
 
-        assertThat(m1Books).isEqualTo(List.of(b1,b2));
-        assertThat(m2Books).isEqualTo(List.of(b3,b4));
+        assertThat(m1Books).extracting(Book::getId)
+                .containsExactlyInAnyOrder(b1.getId(), b2.getId());
+        assertThat(m2Books).extracting(Book::getId)
+                .containsExactlyInAnyOrder(b3.getId(), b4.getId());
 
 
 
